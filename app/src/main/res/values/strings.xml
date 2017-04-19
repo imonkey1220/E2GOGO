@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">e2gogo</string>
+    <string name="signup">Go</string>
+    <string name="enter_email">輸入email</string>
+    <string name="enter_password">輸入/設定密碼</string>
+    <string name="companyId">公司統編</string>
+    <string name="phone">手機號碼</string>
+    <string name="name">匿稱</string>
+    <string name="input_companyId">公司統編/ID</string>
+    <string name="input_device">智慧機名稱</string>
+    <string name="input_Device_Desc">智慧機簡介</string>
+    <string name="action_add_friend">加朋友</string>
+    <string name="action_del_friend">刪朋友</string>
+    <string name="title_activity_control">ControlActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="Device_Photo">Photo</string>
+    <string name="deviceIP">智慧機IP</string>
+
+
+    <string name="action_settings">設定</string>
+    <string name="login_button">Go</string>
+    <string name="welcome">Welcome!!</string>
+    <string name="unknown_response">不明回應</string>
+    <string name="signin_failed">登入失敗</string>
+    <string name="user_profile">Welcome!!</string>
+    <string name="profile_title">會員資料</string>
+    <string name="user_name">BookingMonkey</string>
+    <string name="logout">登出</string>
+    <string name="delete_user">刪除帳號</string>
+    <string name="sign_out_error">登出失敗</string>
+    <string name="user_deletion_error">刪除帳號失敗</string>
+
+    <!-- Auth method picker -->
+    <string name="sign_in_with_google">Google帳號登入</string>
+    <string name="sign_in_with_email">Email帳號登入</string>
+
+    <!-- Email common-->
+    <string name="next_default">Next</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">密碼</string>
+    <string name="required_field">不可以空白</string>
+    <string name="invalid_email_address">email帳號不正確</string>
+    <string name="missing_email_address">請輸入email帳號</string>
+    <string name="progress_dialog_checking_accounts">email帳號確認中</string>
+
+    <!-- Email sign up -->
+    <string name="title_register_email">登入</string>
+    <string name="name_hint">姓名</string>
+    <string name="button_text_save">加入會員</string>
+    <string name="progress_dialog_signing_up">登入中…</string>
+    <plurals name="error_weak_password">
+        <item quantity="one">Password not strong enough. Use at least %1$d character and a mix of letters and numbers</item>
+        <item quantity="other">Password not strong enough. Use at least %1$d characters and a mix of letters and numbers</item>
+    </plurals>
+    <string name="email_account_creation_error">Email account registration unsuccessful</string>
+    <string name="error_user_collision">An account already exists with that email address.</string>
+    <string name="create_account_preamble">"By tapping SAVE you are indicating that you agree to the "</string>
+    <string name="terms_of_service">Terms of Service</string>
+
+
+</resources>
