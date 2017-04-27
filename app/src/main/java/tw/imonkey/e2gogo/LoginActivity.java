@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         if (myDeviceId==null && auth.getCurrentUser()!=null){
             token = FirebaseInstanceId.getInstance().getToken();
             memberEmail=auth.getCurrentUser().getEmail();
-            mUserFile= FirebaseDatabase.getInstance().getReference("/USER/" +memberEmail.replace(".", "_")+"/PFILE/");
+            mUserFile= FirebaseDatabase.getInstance().getReference("/USER/" +memberEmail.replace(".", "_"));
             myDeviceId =mUserFile.push().getKey();
             Map<String, Object> addUser = new HashMap<>();
             addUser.put("memberEmail",memberEmail);
