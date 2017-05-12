@@ -131,7 +131,7 @@ public class QRActivity extends AppCompatActivity {
     }
 
     private void QR2QMS(){
-        mMQSClient= FirebaseDatabase.getInstance().getReference(service+"/"+deviceId+"/CLIENT/");
+        mMQSClient= FirebaseDatabase.getInstance().getReference("/LOG/"+service+"/"+deviceId+"/CLIENT/");
         client.clear();
         client.put("message",Integer.parseInt(message)+1);
         client.put("memberEmail",memberEmail);
@@ -141,7 +141,7 @@ public class QRActivity extends AppCompatActivity {
         editor.putString(deviceId+":message",message);
         editor.apply();
         mDevice= FirebaseDatabase.getInstance().getReference("/DEVICE/"+deviceId);
-        mAddClub=FirebaseDatabase.getInstance().getReference("/CLUB/" + memberEmail.replace(".", "_") + "/SHOP/");
+        mAddClub=FirebaseDatabase.getInstance().getReference( "/SHOP/" + memberEmail.replace(".", "_"));
         mDevice.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -161,7 +161,7 @@ public class QRActivity extends AppCompatActivity {
     }
 
     private void QR2TC(){
-        mTCClient= FirebaseDatabase.getInstance().getReference(service+"/"+deviceId+"/CLIENT/");
+        mTCClient= FirebaseDatabase.getInstance().getReference("/LOG/"+service+"/"+deviceId+"/CLIENT/");
         if (message.equals("A")){
             message="上班" ;
         }else if(message.equals("B")){
@@ -182,7 +182,7 @@ public class QRActivity extends AppCompatActivity {
         editor.putString(deviceId+":message",message);
         editor.apply();
         mDevice= FirebaseDatabase.getInstance().getReference("/DEVICE/"+deviceId);
-        mAddClub=FirebaseDatabase.getInstance().getReference("/CLUB/" + memberEmail.replace(".", "_") + "/SHOP/");
+        mAddClub=FirebaseDatabase.getInstance().getReference("/SHOP/" + memberEmail.replace(".", "_"));
         mDevice.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {

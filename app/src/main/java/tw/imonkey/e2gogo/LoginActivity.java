@@ -65,7 +65,6 @@ public class LoginActivity extends AppCompatActivity {
             if(resultCode == RESULT_CANCELED){
                 displayMessage(getString(tw.imonkey.e2gogo.R.string.signin_failed));
             }
-            return;
         }else {
             displayMessage(getString(tw.imonkey.e2gogo.R.string.unknown_response));
         }

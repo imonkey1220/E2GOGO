@@ -126,7 +126,7 @@ public class MainActivity extends Activity {
 
 
     private void getShop() {
-        Query refShop = FirebaseDatabase.getInstance().getReference("/CLUB/" + memberEmail.replace(".", "_") + "/SHOP/").limitToLast(10);
+        Query refShop = FirebaseDatabase.getInstance().getReference("/SHOP/" + memberEmail.replace(".", "_")).limitToLast(10);
         LVShop = (ListView) findViewById(R.id.listViewShop);
         mLVShopAdapter = new FirebaseListAdapter<Shop>(this, Shop.class, R.layout.listview_device_layout, refShop) {
 

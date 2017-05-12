@@ -58,7 +58,7 @@ public class TCActivity extends AppCompatActivity {
                 if (user!=null){
                     memberEmail=user.getEmail();
 
-                    mTCClient= FirebaseDatabase.getInstance().getReference("/TC/"+deviceId+"/CLIENT");
+                    mTCClient= FirebaseDatabase.getInstance().getReference("/LOG/TC/"+deviceId+"/CLIENT");
                     mTCClient.child(memberEmail.replace(".","_")).limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
@@ -72,7 +72,7 @@ public class TCActivity extends AppCompatActivity {
                 }
 
 
-                mTCServer= FirebaseDatabase.getInstance().getReference("/TC/"+deviceId+"/SERVER");
+                mTCServer= FirebaseDatabase.getInstance().getReference("/LOG/TC/"+deviceId+"/SERVER");
                 mTCServer.limitToLast(1).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -96,7 +96,7 @@ public class TCActivity extends AppCompatActivity {
             }
         };
 
-        mTCServerLive=FirebaseDatabase.getInstance().getReference("/TC/"+deviceId+"/connection");
+        mTCServerLive=FirebaseDatabase.getInstance().getReference("/LOG/TC/"+deviceId+"/connection");
         mTCServerLive.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
