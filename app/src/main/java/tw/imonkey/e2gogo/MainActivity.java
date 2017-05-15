@@ -44,8 +44,7 @@ import java.util.TimeZone;
 
 public class MainActivity extends Activity {
 
-    String memberEmail,myDeviceId;//deviceId=topicId=ShopId
-    String shopDeviceId;
+    String memberEmail,myDeviceId,shopDeviceId;//deviceId=topicId=ShopId
     FirebaseAuth mAuth;
     DatabaseReference mUserFile;
     FirebaseAuth.AuthStateListener mAuthListener;
@@ -105,13 +104,13 @@ public class MainActivity extends Activity {
                 if (user != null) {
                     memberEmail = user.getEmail();
                     if (myDeviceId==null){
-                        mUserFile= FirebaseDatabase.getInstance().getReference("/CLUB/" +memberEmail.replace(".", "_")+"/PFILE/");
+                        mUserFile= FirebaseDatabase.getInstance().getReference("/GUEST/" +memberEmail.replace(".", "_")+"/PFILE/");
                         myDeviceId =mUserFile.push().getKey();
-                        Map<String, Object> addUser = new HashMap<>();
-                        addUser.put("memberEmail",memberEmail);
-                        addUser.put("deviceId",myDeviceId);
-                        addUser.put("timeStamp", ServerValue.TIMESTAMP);
-                        mUserFile.setValue(addUser);
+                        Map<String, Object> addGUEST = new HashMap<>();
+                        addGUEST.put("memberEmail",memberEmail);
+                        addGUEST.put("deviceId",myDeviceId);
+                        addGUEST.put("timeStamp", ServerValue.TIMESTAMP);
+                        mUserFile.setValue(addGUEST);
                         SharedPreferences.Editor editor = getSharedPreferences(devicePrefs, Context.MODE_PRIVATE).edit();
                         editor.putString("deviceId",myDeviceId);
                         editor.putString("memberEmail",memberEmail);
@@ -126,7 +125,7 @@ public class MainActivity extends Activity {
 
 
     private void getShop() {
-        Query refShop = FirebaseDatabase.getInstance().getReference("/SHOP/" + memberEmail.replace(".", "_")).limitToLast(10);
+        Query refShop = FirebaseDatabase.getInstance().getReference("/SHOPPING/" + memberEmail.replace(".", "_")).limitToLast(10);
         LVShop = (ListView) findViewById(R.id.listViewShop);
         mLVShopAdapter = new FirebaseListAdapter<Shop>(this, Shop.class, R.layout.listview_device_layout, refShop) {
 
@@ -137,7 +136,7 @@ public class MainActivity extends Activity {
                     Calendar timeStamp = Calendar.getInstance();
                     timeStamp.setTimeInMillis(Long.parseLong(shop.getAlert().get("timeStamp").toString()));
                     SimpleDateFormat df = new SimpleDateFormat("HH:mm MM/dd", Locale.TAIWAN);
-                    ((TextView) view.findViewById(R.id.deviceMessage)).setText(shop.getAlert().get("message").toString() + "#" + df.format(timeStamp.getTime()));
+                    ((TextView) view.findViewById(R.id.deviceMessage)).setText(shop.getAlert().get("message").toString() + "\n" + df.format(timeStamp.getTime()));
                 } else {
                     ((TextView) view.findViewById(R.id.deviceMessage)).setText("");
                 }
@@ -158,6 +157,38 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 shopDeviceId = mLVShopAdapter.getRef(position).getKey();//deviceId=topicId=ShopId
+                mLVShopAdapter.getRef(position).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        String deviceType=snapshot.child("deviceType").getValue().toString();
+                        Intent intent ;
+                        if (deviceType.equals("主機")) {
+                            intent = new Intent(MainActivity.this, GUESTActivity.class);
+                            intent.putExtra("deviceId", shopDeviceId);
+                            intent.putExtra("memberEmail", memberEmail);
+                            startActivity(intent);
+                        }else if(deviceType.equals("取號機")){
+                            intent = new Intent(MainActivity.this, QMSActivity.class);
+                            intent.putExtra("deviceId", shopDeviceId);
+                            intent.putExtra("memberEmail", memberEmail);
+                            startActivity(intent);
+                        }else if(deviceType.equals("打卡機")){
+                            intent = new Intent(MainActivity.this,TCActivity.class);
+                            intent.putExtra("deviceId", shopDeviceId);
+                            intent.putExtra("memberEmail", memberEmail);
+                            startActivity(intent);
+                        }else if(deviceType.equals("集點機")){
+                            intent = new Intent(MainActivity.this, POINTSActivity.class);
+                            intent.putExtra("deviceId", shopDeviceId);
+                            intent.putExtra("memberEmail", memberEmail);
+                            startActivity(intent);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                    }
+                });
+
                 Intent intent = new Intent(MainActivity.this, QMSActivity.class);
                 intent.putExtra("deviceId", shopDeviceId);
                 startActivity(intent);

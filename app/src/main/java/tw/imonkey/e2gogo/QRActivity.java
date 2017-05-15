@@ -119,7 +119,7 @@ public class QRActivity extends AppCompatActivity {
             deviceId = normalText.split(":")[0];
             service =normalText.split(":")[1];
             message =normalText.split(":")[2];
-            key =normalText.split(":")[3];
+            key =normalText.split(":")[3];// serverKey
             barcodeValue.setText(message);
 
             if (service.equals("QMS")) {
@@ -141,7 +141,7 @@ public class QRActivity extends AppCompatActivity {
         editor.putString(deviceId+":message",message);
         editor.apply();
         mDevice= FirebaseDatabase.getInstance().getReference("/DEVICE/"+deviceId);
-        mAddClub=FirebaseDatabase.getInstance().getReference( "/SHOP/" + memberEmail.replace(".", "_"));
+        mAddClub=FirebaseDatabase.getInstance().getReference( "/SHOPPING/" + memberEmail.replace(".", "_"));
         mDevice.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -182,7 +182,7 @@ public class QRActivity extends AppCompatActivity {
         editor.putString(deviceId+":message",message);
         editor.apply();
         mDevice= FirebaseDatabase.getInstance().getReference("/DEVICE/"+deviceId);
-        mAddClub=FirebaseDatabase.getInstance().getReference("/SHOP/" + memberEmail.replace(".", "_"));
+        mAddClub=FirebaseDatabase.getInstance().getReference("/SHOPPING/" + memberEmail.replace(".", "_"));
         mDevice.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {

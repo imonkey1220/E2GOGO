@@ -56,6 +56,8 @@
     <string name="error_user_collision">An account already exists with that email address.</string>
     <string name="create_account_preamble">"By tapping SAVE you are indicating that you agree to the "</string>
     <string name="terms_of_service">Terms of Service</string>
+    <string name="title_activity_guest">GUESTActivity</string>
+    <string name="title_activity_points">POINTSActivity</string>
 
 
 </resources>
