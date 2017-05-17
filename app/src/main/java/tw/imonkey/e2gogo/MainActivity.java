@@ -135,10 +135,12 @@ public class MainActivity extends Activity {
                 if (shop.getAlert().get("message") != null) {
                     Calendar timeStamp = Calendar.getInstance();
                     timeStamp.setTimeInMillis(Long.parseLong(shop.getAlert().get("timeStamp").toString()));
-                    SimpleDateFormat df = new SimpleDateFormat("HH:mm MM/dd", Locale.TAIWAN);
+                    SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss MM/dd", Locale.TAIWAN);
                     ((TextView) view.findViewById(R.id.deviceMessage)).setText(shop.getAlert().get("message").toString() + "\n" + df.format(timeStamp.getTime()));
+                    ((TextView) view.findViewById(R.id.textViewDeviceType)).setText(df.format(timeStamp.getTime())+"  "+shop.getDeviceType());
                 } else {
                     ((TextView) view.findViewById(R.id.deviceMessage)).setText("");
+                    ((TextView) view.findViewById(R.id.textViewDeviceType)).setText(shop.getDeviceType());
                 }
                 String devicePhotoPath = "/devicePhoto/" + shop.getTopics_id();
                 mImageRef = FirebaseStorage.getInstance().getReference(devicePhotoPath);
@@ -147,11 +149,9 @@ public class MainActivity extends Activity {
                         .using(new FirebaseImageLoader())
                         .load(mImageRef)
                         .into(imageView);
-                ((TextView) view.findViewById(R.id.textViewDeviceType)).setText(shop.getDeviceType());
             }
         };
         LVShop.setAdapter(mLVShopAdapter);
-
 
         LVShop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -211,7 +211,6 @@ public class MainActivity extends Activity {
             public void onCancelled(DatabaseError error) {
             }
         });
-
     }
 
     public void scanQR(View v) {
@@ -231,7 +230,6 @@ public class MainActivity extends Activity {
         // get Connectivity Manager object to check connection
         ConnectivityManager CM= (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = CM.getActiveNetworkInfo();
-
         return (activeNetwork != null) ;
     }
 }
