@@ -31,7 +31,7 @@ public class QRActivity extends AppCompatActivity {
     SurfaceView cameraView;
     TextView barcodeValue;
     public static final String devicePrefs = "devicePrefs";
-    DatabaseReference mMQSClient,mTCClient,mDevice,mAddClub;
+    DatabaseReference mMQSClient,mTCClient, mPOINTSClient,mDevice,mAddClub;
     Map<String, Object> client = new HashMap<>();
     String memberEmail,deviceId,key,message,service;
 
@@ -128,6 +128,9 @@ public class QRActivity extends AppCompatActivity {
             if (service.equals("TC")) {
                 QR2TC();
             }
+           if (service.equals("POINTS")) {
+            QR2POINTS();
+        }
     }
 
     private void QR2QMS(){
@@ -155,6 +158,38 @@ public class QRActivity extends AppCompatActivity {
         });
 
         Intent intent = new Intent(this, QMSActivity.class);
+        intent.putExtra("deviceId", deviceId);
+        startActivity(intent);
+        finish();
+    }
+
+    private void QR2POINTS(){
+        String ACT=message.split(",")[0];
+        message=message.split(",")[1];
+        mPOINTSClient= FirebaseDatabase.getInstance().getReference("/LOG/"+service+"/"+deviceId+"/"+ACT+"/");
+        client.clear();
+        client.put("message",Integer.parseInt(message)+1);
+        client.put("memberEmail",memberEmail);
+        client.put("timeStamp", ServerValue.TIMESTAMP);
+        mPOINTSClient.child(key).setValue(client);
+        SharedPreferences.Editor editor = getSharedPreferences(devicePrefs, Context.MODE_PRIVATE).edit();
+        editor.putString(deviceId+":message",message);
+        editor.apply();
+        mDevice= FirebaseDatabase.getInstance().getReference("/DEVICE/"+deviceId);
+        mAddClub=FirebaseDatabase.getInstance().getReference( "/SHOPPING/" + memberEmail.replace(".", "_"));
+        mDevice.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    Shop shop=snapshot.getValue(Shop.class);
+                    mAddClub.child(shop.getTopics_id()).setValue(shop);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+        Intent intent = new Intent(this, POINTSActivity.class);
         intent.putExtra("deviceId", deviceId);
         startActivity(intent);
         finish();
