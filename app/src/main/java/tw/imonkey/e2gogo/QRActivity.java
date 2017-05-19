@@ -174,6 +174,7 @@ public class QRActivity extends AppCompatActivity {
         mPOINTSClient.child(key).setValue(client);
         SharedPreferences.Editor editor = getSharedPreferences(devicePrefs, Context.MODE_PRIVATE).edit();
         editor.putString(deviceId+":message",message);
+        editor.putString("ACT",ACT);
         editor.apply();
         mDevice= FirebaseDatabase.getInstance().getReference("/DEVICE/"+deviceId);
         mAddClub=FirebaseDatabase.getInstance().getReference( "/SHOPPING/" + memberEmail.replace(".", "_"));
@@ -191,6 +192,7 @@ public class QRActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, POINTSActivity.class);
         intent.putExtra("deviceId", deviceId);
+        intent.putExtra("ACT", ACT);
         startActivity(intent);
         finish();
     }

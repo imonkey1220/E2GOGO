@@ -24,8 +24,8 @@ public class POINTSActivity extends AppCompatActivity {
     public static final String devicePrefs = "devicePrefs";
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
-    DatabaseReference mPOINTS,mQMSClient,mQMSServer,mQMSServerLive;
-    String memberEmail,deviceId;
+    DatabaseReference mPOINTS;
+    String memberEmail,deviceId,ACT;
 
     TextView TVPoints;
 
@@ -38,7 +38,8 @@ public class POINTSActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         deviceId = extras.getString("deviceId");
         SharedPreferences settings = getSharedPreferences(devicePrefs, Context.MODE_PRIVATE);
-        mPOINTS= FirebaseDatabase.getInstance().getReference("/LOG/POINTS/"+deviceId+"/CLIENT/");
+        ACT=settings.getString("ACT",null);
+        mPOINTS= FirebaseDatabase.getInstance().getReference("/LOG/POINTS/"+deviceId+"/"+ACT+"/");
         TVPoints=(TextView) findViewById(R.id.textViewPoints);
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
