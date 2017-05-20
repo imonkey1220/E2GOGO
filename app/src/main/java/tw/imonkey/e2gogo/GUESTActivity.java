@@ -34,7 +34,6 @@ public class GUESTActivity extends AppCompatActivity {
                         finish();
                     }
                 });
-
     }
 
 }
