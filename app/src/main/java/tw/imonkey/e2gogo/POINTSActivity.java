@@ -21,7 +21,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class POINTSActivity extends AppCompatActivity {
     public static final String devicePrefs = "devicePrefs";
@@ -154,6 +158,13 @@ public class POINTSActivity extends AppCompatActivity {
             });
 
             TVPoints.setText(Integer.parseInt(TVPoints.getText().toString())-buyTimes);
+            DatabaseReference mPointChanged=FirebaseDatabase.getInstance().getReference("/DEVICE/"+ deviceId+"/CHANGED");
+            Map<String, Object> data = new HashMap<>();
+            data.clear();
+            data.put("message","ACT:"+ACT+","+"POINTS:"+buyTimes);
+            data.put("memberEmail",memberEmail);
+            data.put("timeStamp", ServerValue.TIMESTAMP);
+            mPointChanged.push().setValue(data);
         }
     }
 }
